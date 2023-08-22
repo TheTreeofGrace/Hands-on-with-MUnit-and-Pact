@@ -19,6 +19,10 @@ public class PactContractBuilder {
 	
 	public PactContractBuilder(String pactArgs, String endpoint, String pactRequestBody, DslPart providerResponseBody) {
 		JSONObject pactSetup = new JSONObject(pactArgs);
+		JSONObject requestBody = new JSONObject();
+		if(pactRequestBody != "") {
+			requestBody = new JSONObject(pactRequestBody);
+		}
 		
 		pact = ConsumerPactBuilder
 				.consumer((String) pactSetup.get("consumer"))
@@ -27,7 +31,7 @@ public class PactContractBuilder {
 			    .path(endpoint)
 			    .method((String) pactSetup.get("method"))
 			    .headers("Content-Type", "application/json")
-			    .body(new JSONObject(pactRequestBody))
+			    .body(requestBody)
 			    .willRespondWith()
 			    .status((Integer) pactSetup.get("status"))
 			    .body(providerResponseBody)

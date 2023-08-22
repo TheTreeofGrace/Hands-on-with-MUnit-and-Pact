@@ -10,7 +10,7 @@ public class PactService {
 	private static String mockPactServerPort = "4444";
 
 	public static Process startPactService() throws IOException, InterruptedException {
-        String command = "pact-jvm-server "
+        String command = "java -jar pact-jvm-server-4.1.0/lib/pact-jvm-server-4.1.0.jar "
             + pactServicePort
             + " -l "
             + mockPactServerPort

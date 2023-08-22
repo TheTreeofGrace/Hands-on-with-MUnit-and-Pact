@@ -14,7 +14,8 @@ public class TeaBuilder {
 		pactResponseBody = new PactDslJsonBody();
 		
 		((PactDslJsonBody) pactResponseBody)
-			.stringMatcher("type", "/(caffinated|decaffinated)/")
+			.stringType("name", "mint")
+			.stringMatcher("type", "(caffinated|decaffinated)")
 			.integerType("supply")
 			.integerType("cost");
 		

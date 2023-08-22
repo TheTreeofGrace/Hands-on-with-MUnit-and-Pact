@@ -1,0 +1,5 @@
+tea:
+  protocol: "HTTP"
+  host: "localhost"
+  port: "4444"
+  path: "/tea"

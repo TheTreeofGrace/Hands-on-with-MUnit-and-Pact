@@ -14,15 +14,15 @@ http://www.mulesoft.org/schema/mule/java http://www.mulesoft.org/schema/mule/jav
 		<set-variable value="#[output application/java --- readUrl('classpath://getTea/set_get_tea_pact_args.dwl')]" doc:name="Set pactArgs" doc:id="39711f7d-4769-43eb-8fea-6c475150c301" variableName="pactArgs"/>
 		<set-variable value="/api/v1/tea" doc:name="Set endpoint" doc:id="2de8c869-b39d-4327-b44b-adfed0341a03" variableName="endpoint"/>
 		<java:invoke-static doc:name="Set providerResponseBody" doc:id="a00cd775-bd34-4bba-bb24-001cd8a68e6b" class="pact.TeaBuilder" method="getTea()" target="providerResponseBody" />
-		<java:new doc:name="Instantiate PactContractBuilder" doc:id="942d1edd-f3e4-4789-b895-2645717d6171" class="pact.PactContractBuilder" constructor="PactContractBuilder(String, String, String, DslPart)" >
+		<java:new doc:name="Instantiate PactContractBuilder" doc:id="942d1edd-f3e4-4789-b895-2645717d6171" class="pact.PactContractBuilder" constructor="PactContractBuilder(String, String, String, DslPart)" target="pactContractBuilder">
 			<java:args ><![CDATA[#[{
 	pactArgs: vars.pactArgs,
 	endpoint: vars.endpoint,
-	pactRequestBody: null,
+	pactRequestBody: "",
 	providerResponseBody: vars.providerResponseBody
 }]]]></java:args>
 		</java:new>
-		<java:invoke doc:name="Set pactBody" doc:id="f7d38daf-4d48-49f5-a30d-a33966d23b78" instance="vars.PactContractBuilder" class="pact.PactContractBuilder" method="pactBuilder()" target="pactBody"/>
+		<java:invoke doc:name="Set pactBody" doc:id="f7d38daf-4d48-49f5-a30d-a33966d23b78" instance="vars.pactContractBuilder" class="pact.PactContractBuilder" method="pactBuilder()" target="pactBody"/>
 		<java:invoke-static method="createPactMockServer(String)" doc:name="Start Pact Mock Server" doc:id="92839526-3cd1-4655-b7a6-c72ba4263ef3" class="pact.PactMockServer">
 			<java:args ><![CDATA[#[{
 	pactBody: vars.pactBody
