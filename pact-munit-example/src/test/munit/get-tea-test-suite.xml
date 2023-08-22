@@ -33,9 +33,16 @@ http://www.mulesoft.org/schema/mule/java http://www.mulesoft.org/schema/mule/jav
 		<munit:execution >
 			<flow-ref doc:name="Flow-ref to get-all-tea" doc:id="53715c82-8a63-48a0-b858-6c3f7cba9892" name="get-all-tea"/>
 		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="4d208c2c-a01f-4f05-bbd7-d52a188aa864" expression="#[playload.mint]" is="#[MunitTools::notNullValue()]"/>
+			<java:invoke-static method="writePactFile()" doc:name="Write Pact File" doc:id="853766ed-34e1-422b-8f2e-fc4e59ea8164" class="pact.PactMockServer"/>
+		</munit:validation>
 	</munit:test>
 	<munit:after-test name="get-tea-test-suiteAfter_Test" doc:id="2746aa55-4f4c-49e9-8261-8a30055ac688" >
 		<java:invoke-static method="stopPactService()" doc:name="Stop Pact Service" doc:id="ea42feab-0ae6-4859-ad69-ef0d5d7885a8" class="pact.PactService"/>
+		<java:invoke-static method="close()" doc:name="Close Client" doc:id="6f07a8fc-1978-4848-9d22-c1112777224d" class="pact.PactMockServer"/>
+		<remove-variable doc:name="Remove pactArgs" doc:id="5f27ffb2-dad8-4770-a8b8-8bceccbc6eb4" variableName="#[vars.pactArgs]"/>
+		<remove-variable doc:name="Remove endpoint" doc:id="2fe68b0c-5f81-4548-b889-d63550fd138b" variableName="vars.endpoint"/>
 	</munit:after-test>
 
 </mule>
