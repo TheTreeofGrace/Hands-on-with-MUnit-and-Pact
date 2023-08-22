@@ -4,13 +4,11 @@ import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class PactMockServer {
@@ -63,6 +61,7 @@ public class PactMockServer {
 			try {
 				post.setEntity(new StringEntity(requestBody.toString()));
 				String body = client.execute(post, handler);
+				System.out.println("Request Pact Body: " + body);
 			    	    
 			    close();
 			} catch (IOException e) {

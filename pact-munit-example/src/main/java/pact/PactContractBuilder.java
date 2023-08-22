@@ -1,11 +1,24 @@
 package pact;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import au.com.dius.pact.consumer.ConsumerPactBuilder;
+import au.com.dius.pact.consumer.dsl.DslPart;
+import au.com.dius.pact.core.model.OptionalBody;
+import au.com.dius.pact.core.model.PactSpecVersion;
+import au.com.dius.pact.core.model.RequestResponseInteraction;
+import au.com.dius.pact.core.model.RequestResponsePact;
+
 public class PactContractBuilder {
     private RequestResponsePact pact;
 	
-	public PactConsumerBuilder(String pactArgs, String endpoint, String pactRequestBody, DslPart pactResponseBody) {
+	public PactContractBuilder(String pactArgs, String endpoint, String pactRequestBody, DslPart providerResponseBody) {
 		JSONObject pactSetup = new JSONObject(pactArgs);
-		JSONObject requestBody = new JSONObject();
 		
 		pact = ConsumerPactBuilder
 				.consumer((String) pactSetup.get("consumer"))
@@ -17,7 +30,7 @@ public class PactContractBuilder {
 			    .body(new JSONObject(pactRequestBody))
 			    .willRespondWith()
 			    .status((Integer) pactSetup.get("status"))
-			    .body(pactResponseBody)
+			    .body(providerResponseBody)
 			    .toPact();
 	}
 	

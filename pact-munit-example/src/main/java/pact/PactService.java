@@ -1,12 +1,11 @@
 package pact;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.apache.http.client.ClientProtocolException;
 
 public class PactService {
-    private static Process pactApp = null;
+    private static Process pactService = null;
 	private static String pactServicePort = "5555";
 	private static String mockPactServerPort = "4444";
 
@@ -17,8 +16,6 @@ public class PactService {
             + mockPactServerPort
             + " -u "
             + mockPactServerPort
-            + " --broker "
-            + brokerUrl
             + " -v 3";
 
         Process pactService = Runtime.getRuntime().exec(command);

@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
-	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xsi:schemaLocation="
+<mule xmlns:java="http://www.mulesoft.org/schema/mule/java"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
-		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/java http://www.mulesoft.org/schema/mule/java/current/mule-java.xsd">
 	<munit:config name="get-tea-test-suite.xml" />
+	<munit:before-test name="get-tea-test-suiteBefore_Test" doc:id="4852a6cd-3879-4164-9492-3534632db448" >
+		<java:invoke-static doc:name="Start Pact Service" doc:id="dc07a4a8-7a05-4b9a-9324-4c6c81569f32" class="pact.PactService" method="startPactService()"/>
+		<set-variable value="#[output application/java --- readUrl('classpath://getTea/set_get_tea_pact_args.dwl')]" doc:name="Set pactArgs" doc:id="39711f7d-4769-43eb-8fea-6c475150c301" variableName="pactArgs"/>
+		<set-variable value="/api/v1/tea" doc:name="Set endpoint" doc:id="2de8c869-b39d-4327-b44b-adfed0341a03" variableName="endpoint"/>
+		<java:invoke-static doc:name="Set providerResponseBody" doc:id="a00cd775-bd34-4bba-bb24-001cd8a68e6b" class="pact.TeaBuilder" method="getTea()" target="providerResponseBody" />
+		<java:new doc:name="Instantiate PactContractBuilder" doc:id="942d1edd-f3e4-4789-b895-2645717d6171" class="pact.PactContractBuilder" constructor="PactContractBuilder(String, String, String, DslPart)" >
+			<java:args ><![CDATA[#[{
+	pactArgs: vars.pactArgs,
+	endpoint: vars.endpoint,
+	pactRequestBody: null,
+	providerResponseBody: vars.providerResponseBody
+}]]]></java:args>
+		</java:new>
+		<java:invoke doc:name="Set pactBody" doc:id="f7d38daf-4d48-49f5-a30d-a33966d23b78" instance="vars.PactContractBuilder" class="pact.PactContractBuilder" method="pactBuilder()" target="pactBody"/>
+		<java:invoke-static method="createPactMockServer(String)" doc:name="Start Pact Mock Server" doc:id="92839526-3cd1-4655-b7a6-c72ba4263ef3" class="pact.PactMockServer">
+			<java:args ><![CDATA[#[{
+	pactBody: vars.pactBody
+}]]]></java:args>
+		</java:invoke-static>
+	</munit:before-test>
 	<munit:test name="get-tea-test-suite-get-all-teaTest" doc:id="376310b1-043a-41b7-845a-2d1cabac3b18" description="Test">
 		<munit:execution >
 			<flow-ref doc:name="Flow-ref to get-all-tea" doc:id="53715c82-8a63-48a0-b858-6c3f7cba9892" name="get-all-tea"/>
 		</munit:execution>
 	</munit:test>
+	<munit:after-test name="get-tea-test-suiteAfter_Test" doc:id="2746aa55-4f4c-49e9-8261-8a30055ac688" >
+		<java:invoke-static method="stopPactService()" doc:name="Stop Pact Service" doc:id="ea42feab-0ae6-4859-ad69-ef0d5d7885a8" class="pact.PactService"/>
+	</munit:after-test>
 
 </mule>
