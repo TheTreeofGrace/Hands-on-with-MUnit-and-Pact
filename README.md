@@ -14,6 +14,42 @@ This playground uses the following technology so you will need to make sure the 
 1. Download Pact Standalone JVM: 
 1. Eclipse (maybe, sometimes get an error about needing Eclipse installed for Windows): https://eclipseide.org/
 
+***Network***
+The following ports will be used for the application and testing:
+- 8081 -> consumer api (my tea store)
+- 8082 -> provider api (tea supplier)
+
+## Getting Started with the Playground
+The playground uses MuleSoft with Mule 4 and version 4 of pact with specification version 3. 
+
+### Good programming terms to know
+Although no existing knowledge of Java will be needed for this playground it could be benificial to have basic knowledge about some terms used for programming. Such as:
+
+- "Code block" a collection of lines of code in a function
+- "Function/Method" how we call a certain set of code
+- "Veriable" how we can save the data we are using
+- "Class" how we can organise a group of functions together that are related to a similar purpose
+
+### Good testing terms to know
+It might also be useful to know some common testing terms such as: 
+- "Before test, Before suite, After test, After suite" when organising a test we might need to perform actions before and after the function we are testing is run in the test
+- "Mocking/Mock data" the act of using production like data to emulate a real live service
+
+### Good commands to know
+- `cd <dirName>` to move into a directory
+- `cd ..` to move out of a directory
+- `ls` to list directories and files of your current location
+- `pwd` if you get lost where you are in the directories will give full path location
+
+## About Pact
+
+Pact allows you to define a contract between two ends of an API connection (or relationship). Pact refers to these as consumers and providers. The consumer is the consuming API, otherwise known as the "frontend" API. It is the side of the contract relationship that is making a request to another API. The provider is the API that is giving a service to be used by other APIs, otherwise known as the backend API.
+
+Pact provides a DSL(Domain Specific Lanugage) for consumers to define the request they will make to a provider along with the response they expect back. This expectation is used to create the mock provider that is then played back to the real provider with the pact file that is produced.
+
+![](docs-images/pact-contract-diagram.png)
+<sup>Example diagram of the relationship architecture from docs.pact.io</sup>
+
 ## Explain the flow
 
 TODO: dev specs
