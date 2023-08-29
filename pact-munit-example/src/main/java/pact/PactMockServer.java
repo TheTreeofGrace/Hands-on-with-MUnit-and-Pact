@@ -50,28 +50,4 @@ public class PactMockServer {
 	    	    
 	    close();
 	}
-	
-	public static void publishPactFile(String consumerPactArguments) throws ClientProtocolException {
-			client = HttpClients.createDefault();
-			HttpPost post = new HttpPost("http://localhost:" + pactServicePort + "/publish");
-			JSONObject pactArgs = new JSONObject(consumerPactArguments);
-			JSONObject requestBody = new JSONObject();
-			ResponseHandler<String> handler = new BasicResponseHandler();
-	
-			requestBody.put("consumer", (String) pactArgs.get("consumer"));
-			requestBody.put("consumerVersion", (String) pactArgs.get("consumerVersion"));
-			requestBody.put("provider", (String) pactArgs.get("provider"));
-			
-			post.setHeader("Content-Type", "application/json");
-			
-			try {
-				post.setEntity(new StringEntity(requestBody.toString()));
-				String body = client.execute(post, handler);
-				System.out.println("Request Pact Body: " + body);
-			    	    
-			    close();
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}	    
-	}
 }
