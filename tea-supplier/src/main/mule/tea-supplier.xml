@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="3aa519ff-f365-43f2-98fe-8c475dd25420" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="healthcheck" doc:id="cf32aca3-9033-4f10-8a91-e09938d02f10" >
+		<http:listener doc:name="Listener" doc:id="6bd4f788-7da5-4829-8210-53a58b44dd97" config-ref="HTTP_Listener_config" path="/api/v1/healthcheck" outputMimeType="application/json"/>
+		<set-payload value='#[{"message": "I am up."}]' doc:name="Set Payload" doc:id="0380176d-241d-419b-aec7-e30db8b3b283" />
+	</flow>
+	<flow name="get-tea" doc:id="5c59fb17-51d8-4775-ae02-e912bc7ac56c" >
+		<http:listener doc:name="Listener" doc:id="90b6919a-023c-447a-8bdf-e3ec131adbb0" config-ref="HTTP_Listener_config" path="/api/v1/tea/supply" outputMimeType="application/json" allowedMethods="GET"/>
+		<set-payload value="#[output application/json --- readUrl('classpath://getTea/all_tea_mock.dwl')]" doc:name="Set Payload" doc:id="2ebd72d4-d1ab-44cd-816f-05739826007c" />
+	</flow>
+	<flow name="get-tea-by-name" doc:id="f507ce82-bdca-4bc3-957b-a1021f11b369" >
+		<http:listener doc:name="Listener" doc:id="cea3c88f-805f-4b67-a76c-3e0de3d789ed" config-ref="HTTP_Listener_config" path="/api/v1/tea/supply/{name}" allowedMethods="GET"/>
+		<set-payload value="#[output application/json --- readUrl('classpath://getTea/tea_mock_mint.dwl')]" doc:name="Set Payload" doc:id="587af513-3875-4796-805b-59260050195b" />
+	</flow>
+	<flow name="order-tea" doc:id="adcc344a-9514-4192-979b-3747c3ea3143" >
+		<http:listener doc:name="Listener" doc:id="0f8ec80c-f7f0-461f-b5ec-b3fa32893354" config-ref="HTTP_Listener_config" path="/api/v1/tea/order" outputMimeType="application/json" allowedMethods="POST">
+			<http:response statusCode="201" >
+			</http:response>
+		</http:listener>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="a3f0ad1e-f0c0-4e1a-9963-34fb59178c5b" />
+	</flow>
+</mule>
