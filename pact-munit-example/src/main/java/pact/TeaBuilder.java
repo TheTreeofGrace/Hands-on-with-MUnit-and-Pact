@@ -4,21 +4,25 @@ import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 
 public class TeaBuilder {
-	private static DslPart pactResponseBody;
+	private static DslPart providerResponseBody;
 	
 	public static DslPart getPactResponseBody() {
-		return pactResponseBody;
+		return providerResponseBody;
 	}
 	
-	public static DslPart getTea() {
-		pactResponseBody = new PactDslJsonBody();
+	public static String getTea() {
+		providerResponseBody = new PactDslJsonBody();
 		
-		((PactDslJsonBody) pactResponseBody)
-			.stringType("name", "mint")
-			.stringMatcher("type", "(caffinated|decaffinated)")
-			.integerType("supply")
-			.integerType("cost");
+		((PactDslJsonBody) providerResponseBody)
+				.array("tea")
+					.object()
+						.stringType("name", "mint")
+						.stringMatcher("type", "(caffinated|decaffinated)")
+						.integerType("supply")
+						.integerType("cost")
+					.closeObject()
+				.closeArray();
 		
-		return pactResponseBody;
+		return "";
 	}
 }

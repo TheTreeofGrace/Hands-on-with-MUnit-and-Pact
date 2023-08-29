@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="78fa8d81-f12e-416b-b186-a0c868709ae8" >
+		<http:listener-connection host="0.0.0.0" port="8081" readTimeout="3000" />
+	</http:listener-config>
+	<http:request-config name="tea_configuration" doc:name="HTTP Request configuration" doc:id="50bb3e60-6945-4158-a936-ece30006a7a0" basePath="/api/v1" >
+		<http:request-connection protocol="${tea.protocol}" host="${tea.host}" port="${tea.port}" />
+	</http:request-config>
+	<flow name="get-all-tea" doc:id="a6359817-5e6a-4a3a-831d-5e30502324f8" >
+		<http:listener doc:name="Listener" doc:id="7fd926eb-84ce-4e28-8059-6189c9702983" config-ref="HTTP_Listener_config" path="api/v1/tea/supply/" allowedMethods="GET">
+			<http:response statusCode="200" />
+		</http:listener>
+		<http:request method="GET" doc:name="Get All Tea" doc:id="2ff94555-4e60-4433-bc6b-8f95b0d27835" config-ref="tea_configuration" path="/tea/supply"/>
+	</flow>
+	<flow name="get-tea-by-name" doc:id="985a5d4d-cc96-476c-bfd3-58ebfe2b120b" >
+		<http:listener doc:name="Listener" doc:id="213d51dd-e637-4631-bc62-44aa4f5ab2e2" config-ref="HTTP_Listener_config" path="/api/v1/tea/supply/{name}" allowedMethods="GET" outputMimeType='application/json;name=""' outputEncoding="UTF-8">
+			<http:response statusCode="200" />
+		</http:listener>
+		<http:request method="GET" doc:name="Get Tea by Name" doc:id="408c4ba4-2126-44a8-83ed-253a7501e228" path="/tea/supply/{name}" config-ref="tea_configuration"/>
+	</flow>
+	<flow name="place-tea-order" doc:id="918a6e85-4ad4-407d-96ee-0f52b123736e" >
+		<http:listener doc:name="Listener" doc:id="c6d3a745-c7a3-4c54-b776-8a3717b0c9fa" config-ref="HTTP_Listener_config" path="/api/v1/tea/order" allowedMethods="POST"/>
+		<http:request method="POST" doc:name="Make Order" doc:id="184e5431-32ff-4925-bbac-6bc6c9e83d1d" config-ref="tea_configuration" path="/tea/order" sendBodyMode="ALWAYS"/>
+	</flow>
+</mule>

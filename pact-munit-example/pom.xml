@@ -15,7 +15,7 @@
 
 		<app.runtime>4.4.0-20230320</app.runtime>
 		<mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
-		<pact.version>4.1.41</pact.version>
+		<pact.version>4.1.42</pact.version>
 		<munit.version>2.3.14</munit.version>
 	</properties>
 

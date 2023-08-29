@@ -45,7 +45,7 @@ public class PactContractBuilder {
 		for (RequestResponseInteraction interaction : pactInteractions) {
 			String method = interaction.getRequest().getMethod();
 			
-			if((method.contains("GET") == true) || (method.contains("DELETE") == true)) {
+			if((method.contains("GET") == true)) {
 				Map <String, List<String>> headers = new HashMap<String, List<String>>();
 				interaction.getRequest().setHeaders(headers);
 				interaction.getRequest().setBody(OptionalBody.missing());
@@ -65,22 +65,30 @@ public class PactContractBuilder {
 			
 			interactions.add(pactV3Interactions);
 		}
+		System.out.println("Pact Interactions Built: " + interactions);
 		
 		return interactions;
 	}
 	
 	public String pactBuilder() {
+		System.out.println("Starting builder...");
 		JSONObject consumer = new JSONObject();
 		JSONObject provider = new JSONObject();
 		JSONObject pactRequest = new JSONObject();
+		
+		System.out.println("starting interaction builder...");
 		List<JSONObject> interactions = interactionsBuilder();
 		
 		consumer.put("name", pact.getConsumer().getName());
 		provider.put("name", pact.getProvider().getName());
 		
+		System.out.println("get interactions...");
+		
 		pactRequest.put("consumer", consumer);
 		pactRequest.put("provider", provider);
 		pactRequest.put("interactions", interactions);
+		
+		System.out.println("PACT Request: " + pactRequest);
 		
 		return pactRequest.toString();
 	}

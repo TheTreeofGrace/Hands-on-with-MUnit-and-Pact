@@ -1,3 +1,7 @@
+# --------------- #
+# Studio-specific #
+# --------------- #
 .mule/
 .metadata/
 .tooling
+.DS_Store
