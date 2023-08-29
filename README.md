@@ -107,13 +107,13 @@ Finally, `/tea/order` should take a request object with "name" and "amount". The
 
 
 
-## Running a test
+### 1.1 Running a test
 
-## Running the provider verification
+### 1.2 Running the provider verification
 
-## Fixing the contract verification 
+## 2. Fixing the contract verification 
 
-## Writing more tests for each method
+## 3. Writing more tests for each method
 
 
 ## [Bonus] Running with the Pact Broker
