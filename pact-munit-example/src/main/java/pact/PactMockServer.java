@@ -15,9 +15,13 @@ public class PactMockServer {
     private static String pactServicePort = "5555";
 	private static String mockPactServerPort = "4444";
 	private static CloseableHttpClient client = null;
+	
+	public static void close() throws IOException {
+		client.close();
+	}
 
     public static void createPactMockServer(String pactBody) throws ClientProtocolException, IOException, InterruptedException {
-    CloseableHttpClient client = HttpClients.createDefault();
+    client = HttpClients.createDefault();
     HttpPost post = new HttpPost("http://localhost:" + pactServicePort + "/create?state=NoUsers&path=/sub/ref/path");
     ResponseHandler<String> handler = new BasicResponseHandler();
 
@@ -25,6 +29,8 @@ public class PactMockServer {
     post.setEntity(new StringEntity(pactBody));
 
     client.execute(post, handler);
+    
+    System.out.println("Run the Pact Mock Server.");
 
     close();
     }
@@ -67,9 +73,5 @@ public class PactMockServer {
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}	    
-	}
-	
-	public static void close() throws IOException {
-		client.close();
 	}
 }
