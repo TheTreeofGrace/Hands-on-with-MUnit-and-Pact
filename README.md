@@ -203,6 +203,90 @@ This is an example of the DSL setup not being correct. So we will need to see wh
 
 ## 2. Fixing the contract verification 
 
+The first Error 1.1 with the currancy is to do with our mock data we have used for the consumer test. If we open the file `pact-munit-example/src/main/java/pact/TeaBuilder.java` then go to the function `getTea`. You should see the following code: 
+
+```Java
+public static String getTea() {
+	providerResponseBody = new PactDslJsonBody();
+		
+	((PactDslJsonBody) providerResponseBody)
+		.array("tea")
+			.object()
+			    .stringType("name", "mint")
+				.stringMatcher("type", "(caffinated|decaffinated)")
+				.integerType("supply")
+				.integerType("cost")
+			.closeObject()
+		.closeArray();
+		
+	return "";
+}
+```
+
+Here we can see we have put "cost" as an integer, we need to change this to `stringMatcher`. We will use regex instead to ensure the cost form is correct.
+
+`.stringMatcher("cost", "[0-9]GBP")`
+
+Follow the below steps to update the pact file. 
+
+1. Save the changes
+1. Run the MUnit tests with right-click run `pact-munit-example/src/test/munit/get-tea-test-suite.xml`
+1. Run the tea-service with right-click run `tea-supplier/src/main/mule/tea-supplier.xml`
+1. In the wetty terminal run the command `mvn pact:verify`
+
+There should now be one less error returned.
+
+![](docs-images/2.1-one-less-error.png)
+
+Next we need to fix the regex for the Caffeinated or Decaffeinated. Update `TeaBuilder` `getTea()` function again with:
+
+`stringMatcher("type", "caffeinated|decaffeinated")`
+
+Follow the run refresh steps again:
+
+1. Save the changes
+1. Run the MUnit tests with right-click run `pact-munit-example/src/test/munit/get-tea-test-suite.xml`
+1. Run the tea-service with right-click run `tea-supplier/src/main/mule/tea-supplier.xml`
+1. In the wetty terminal run the command `mvn pact:verify`
+
+Now we should be left with only one error about the amount of items returned. 
+
+![](docs-images/2.2-last-error.png)
+
+This is because two objects are returned in the array but we are only expecting one. This means we need to use `minArrayLike()` where we can say each object in the array must meet the matchers and there should be minimum on one returned.
+
+The updated `getTea()` function should look like this:
+
+```Java
+public static String getTea() {
+	providerResponseBody = new PactDslJsonBody();
+		
+	((PactDslJsonBody) providerResponseBody)
+			.minArrayLike("tea", 1)
+					.stringType("name", "mint")
+					.stringMatcher("type", "caffeinated|decaffeinated")
+					.integerType("supply")
+					.stringMatcher("cost", "[0-9]GBP")
+				.closeObject()
+			.closeArray();
+		
+	return "";
+}
+```
+
+Now follow the same steps again to see if the updates are now correct.
+
+1. Save the changes
+1. Run the MUnit tests with right-click run `pact-munit-example/src/test/munit/get-tea-test-suite.xml`
+1. Run the tea-service with right-click run `tea-supplier/src/main/mule/tea-supplier.xml`
+1. In the wetty terminal run the command `mvn pact:verify`
+
+Ok, so we have now removed the orginial errors. However, now because it is checking all objects over the just the first object we have some more errors. One is a consumer side error and the other is a Provider error. 
+
+![](docs-images/2.3-more-errors.png)
+
+Lets finish the consumer side error first. With the value `0.55GBP` that is returned, we can see that decimal numbers are allowed. Our regex for cost only allowed for 0-9 numbers. We need to update this with correct regex in `TeaBuilder.getTea()`. 
+
 
 
 ## 3. Writing more tests for each method
