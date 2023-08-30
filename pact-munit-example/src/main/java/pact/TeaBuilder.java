@@ -18,7 +18,7 @@ public class TeaBuilder {
 						.stringType("name", "mint")
 						.stringMatcher("type", "caffeinated|decaffeinated")
 						.integerType("supply")
-						.stringMatcher("cost", "[0-9]GBP")
+						.stringMatcher("cost", "\\d+\\.?\\d*GBP")
 					.closeObject()
 				.closeArray();
 		
