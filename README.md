@@ -350,12 +350,6 @@ Follow the steps again to run:
 
 Now we should see Passed in the wetty terminal!
 
-
-
-## 3. Writing more tests for each method
-
-
-
 ## [Bonus] Running with the Pact Broker
 To use the pact broker with this solution you will need to make a few small changes. 
 
