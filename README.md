@@ -107,23 +107,41 @@ Finally, `/tea/order` should take a request object with "name" and "amount". The
 
 Go to your VNC in the browser located at <YOUR-PANDA>.devopsplayground.org:6080/vnc.html
 
+When on the VNC, dismiss the popups and continue through the Linux setup. Then edit the scaling of the VNC to local.
+
+![](docs-images/0-set-scaling.png)
+
 In the repo there is already one test setup. Before we can run the test, we first need to setup the AnyPoint workspace and import the Mule projects. 
 
 To setup the workspace, we need to open anypoint studio located in `/Home/AnypointStudio`. Click on the `Anypoint Studio` application. This will open a window asking to set up your workspace. 
 
-> For the playground Anypoint Studio instance it **must** be set to the following directory: `/Home/workdir/Hands-on-with-MUnit-and-Pact`. Otherwise there will be an issue with the projects not displaying. 
+For the playground Anypoint Studio instance it **must** be set to the following directory: `/Home/workdir/Hands-on-with-MUnit-and-Pact`. Otherwise there will be an issue with the projects not displaying. 
 
-Set the workspace to the directory like the image below.
+Set the workspace to the directory like the image below making sure the work directory is set to `/Home/workdir/Hands-on-with-MUnit-and-Pact`.
 
 ![](docs-images/1.1-set-workspace.png)
 
-Now the workspace is set, all we need to do is start to import the two projects. Go to `File -> Import` or click the Import Project on the side. 
+Now the workspace is set, all we need to do is start to import the two projects. Go to `File -> Import`. 
 
 ![](docs-images/1.1.1-import.png)
 
 Then select `Anypoint Studio -> Anypoint Studio project from File System`.
 
 ![](docs-images/1.1.2-project-type.png)
+
+For first time setup you may encounter a blank screen instead of being given the contents of the directory.
+
+![](docs-images/1.1.3-blank-import-dir.png)
+
+To resolve this issue click "Cancel" and go to `File -> Switch Workspace -> Other`.
+
+![](docs-images/1.1.4-switch-workspace.png)
+
+Click on `Launch` on the popup after checking it is set to the correct workspace. This will relaunch Anypoint Studio.
+
+![](docs-images/1.1.5-launch-workspace.png)
+
+After this try to Import the project again through `File -> Import`. Then select `Anypoint Studio -> Anypoint Studio project from File System`.
 
 After clicking next, select the project `pact-munit-example` to have the screen below.
 
