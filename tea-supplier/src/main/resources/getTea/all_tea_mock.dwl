@@ -9,7 +9,7 @@
 		{
 			"name": "English Breakfast",
 			"type": "caffeinated",
-			"supply": "100000000",
+			"supply": 100000000,
 			"cost": "0.55GBP"
 		}
 	]
