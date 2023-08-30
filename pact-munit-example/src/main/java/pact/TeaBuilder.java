@@ -14,12 +14,11 @@ public class TeaBuilder {
 		providerResponseBody = new PactDslJsonBody();
 		
 		((PactDslJsonBody) providerResponseBody)
-				.array("tea")
-					.object()
+				.minArrayLike("tea", 1)
 						.stringType("name", "mint")
-						.stringMatcher("type", "(caffinated|decaffinated)")
+						.stringMatcher("type", "caffeinated|decaffeinated")
 						.integerType("supply")
-						.integerType("cost")
+						.stringMatcher("cost", "[0-9]GBP")
 					.closeObject()
 				.closeArray();
 		
