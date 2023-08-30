@@ -2,7 +2,9 @@
 
 This repo is intended for the DevOps Playground Hands on with MUnit and Pact. During the DevOps Playground we provide a hosted infra that can be accessed by any web browser on your machine. You can find your instance on the day here: https://lab.devopsplayground.org/
 
-Follow along with the presenter on the day, if you get stuck or fall behind, there are detailed steps below of what we will be doing. You can rewind or awatch back on YouTube if using your own machine at anytime. [LINK TO COME]
+Follow along with the presenter on the day, if you get stuck or fall behind, there are detailed steps below of what we will be doing. You can rewind or awatch back on YouTube if using your own machine at anytime.
+
+- YouTube: https://www.youtube.com/live/l7-L0uO3Ur8?si=7-K6JvxV4b2w9_GC
 
 ## Prerequisites (Your own machine)
 This playground uses the following technology so you will need to make sure the following is setup on your machine:
@@ -11,7 +13,7 @@ This playground uses the following technology so you will need to make sure the 
 1. Get an AnyPoint Studio Trial or Licence: https://www.mulesoft.com/lp/dl/anypoint-mule-studio
 1. Install Java: https://www.java.com/download/
 1. Install Maven: https://maven.apache.org/install.html
-1. Download Pact Standalone JVM: 
+1. Download Pact Standalone JVM: [pact-jvm-server-4.1.42](https://repo1.maven.org/maven2/au/com/dius/pact/pact-jvm-server/4.1.42/#:~:text=06%3A53%20%20%20%20%20%20%20128-,pact%2Djvm%2Dserver%2D4.1.42.zip,-2023%2D07%2D28)
 1. Eclipse (maybe, sometimes get an error about needing Eclipse installed for Windows): https://eclipseide.org/
 
 ***Network***
