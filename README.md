@@ -105,6 +105,8 @@ Finally, `/tea/order` should take a request object with "name" and "amount". The
 
 ## 1. Setup the Environment
 
+Go to your VNC in the browser located at <YOUR-PANDA>.devopsplayground.org:6080/vnc.html
+
 In the repo there is already one test setup. Before we can run the test, we first need to setup the AnyPoint workspace and import the Mule projects. 
 
 To setup the workspace, we need to open anypoint studio located in `/Home/AnypointStudio`. Click on the `Anypoint Studio` application. This will open a window asking to set up your workspace. 
@@ -139,29 +141,65 @@ Now we have the `pact-munit-example` project imported. We need to repeat the sam
 
 ### 1.1 Running a test
 
+To run the MUnit test find and open the file `pact-munit-example/src/test/munit/get-tea-test-suite.xml`. We can see the test has already been setup. Now right click and run the test by clicking on the option `Run MUnit Suite`.
+
 ![](docs-images/1.6-run-tea-store-test.png)
+
+You will see the below error output in the terminal. This is because we are missing an environment variable. 
 
 ![](docs-images/1.7-tea-store-error.png)
 
+To setup the environment variable we will need to go to `Run -> Run Configurations...`. 
+
 ![](docs-images/1.8-tea-store-config.png)
+
+Next we add the environment variable `env` with the value `local`.
 
 ![](docs-images/1.9-tea-store-env.png)
 
+> Sometimes there are issues with inputing text into the field with the Playground instance. When this happens, typing into a text file on your machine and then going back to the instance and try again. It should then for some reason, let you now type into the box. 
+
 ![](docs-images/1.10-tea-store-env.png)
 
+When you have successfully entered the envrionment variable, run the test again. This time it should pass. 
+
 ![](docs-images/1.11-tea-store-test-pass.png)
+
+The Pact file will be created under: `./pact-munit-example/target/pacts/myOnlineTeaStore-teaSupplier.json`. Open the file and take a look at it. 
 
 ### 1.2 Running the provider verification
 
 ![](docs-images/1.12-tea-supplier.png)
 
+We will get an output of `STATUS -> FAILED`. This is to be expected. Similar to the `pact-example-munit` project, we also need to set the environment variable again for the Tea Supplier. 
+
 ![](docs-images/1.13-tea-sup-fail.png)
+
+Go to `Run Configuration` and click on `Environment`. Add the variable `env` with the value `local`.
 
 ![](docs-images/1.14-tea-sup-env.png)
 
+Now run the application again by right click -> `Run`. This time we should see `STATUS -> DEPLOYED`
+
 ![](docs-images/1.15-tea-sup-run.png)
 
+Now we need to go to the Wetty terminal to run the provider test with the pact file. Go to <YOUR-PANDA>.devopsplayground.org/wetty
+
+Make sure you are in the /Home/workdir/Hands-on-with-MUnit-and-Pact/tea-supplier directory. Check this by running `pwd`. If not in the correct directory then run `cd workdir/Hands-on-with-MUnit-and-Pact/tea-supplier`.
+
+In the terminal enter the command `mvn pact:verify`. It might take some time as it will need to download the plugin. When it is done you should see output like the below image.
+
 ![](docs-images/1.16-tea-sup-test-run.png)
+
+We can see there are some failures with the response body not being as expected.  
+
+- 1.1) body: $.tea.0.cost Expected "2GBP" (String) to be an integer
+
+- 1.2) body: $.tea.0.type Expected "decaffeinated" to match '(caffinated|decaffinated)'
+
+- 1.3) body: $.tea Expected a List with 1 elements but received 2 elements
+
+This is an example of the DSL setup not being correct. So we will need to see what the issue is. 
 
 ## 2. Fixing the contract verification 
 
