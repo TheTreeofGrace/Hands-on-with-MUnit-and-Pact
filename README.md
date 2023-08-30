@@ -131,6 +131,8 @@ Make sure to then untick the box `Copy project into workspace` to prevent any na
 
 ![](docs-images/1.3-import-tea-store.png)
 
+Now we have the `pact-munit-example` project imported. We need to repeat the same steps for the `tea-supplier` project. Follow the same steps above but changing the directory. 
+
 ![](docs-images/1.4-import-tea-supplier.png)
 
 ![](docs-images/1.5-import-tea-supplier.png)
@@ -163,7 +165,10 @@ Make sure to then untick the box `Copy project into workspace` to prevent any na
 
 ## 2. Fixing the contract verification 
 
+
+
 ## 3. Writing more tests for each method
+
 
 
 ## [Bonus] Running with the Pact Broker
