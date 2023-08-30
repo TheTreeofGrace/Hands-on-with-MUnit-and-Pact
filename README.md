@@ -105,11 +105,61 @@ Finally, `/tea/order` should take a request object with "name" and "amount". The
 
 ## 1. Setup the Environment
 
+In the repo there is already one test setup. Before we can run the test, we first need to setup the AnyPoint workspace and import the Mule projects. 
 
+To setup the workspace, we need to open anypoint studio located in `/Home/AnypointStudio`. Click on the `Anypoint Studio` application. This will open a window asking to set up your workspace. 
+
+> For the playground Anypoint Studio instance it **must** be set to the following directory: `/Home/workdir/Hands-on-with-MUnit-and-Pact`. Otherwise there will be an issue with the projects not displaying. 
+
+Set the workspace to the directory like the image below.
+
+![](docs-images/1.1-set-workspace.png)
+
+Now the workspace is set, all we need to do is start to import the two projects. Go to `File -> Import` or click the Import Project on the side. 
+
+![](docs-images/1.1.1-import.png)
+
+Then select `Anypoint Studio -> Anypoint Studio project from File System`.
+
+![](docs-images/1.1.2-project-type.png)
+
+After clicking next, select the project `pact-munit-example` to have the screen below.
+
+![](docs-images/1.2-import-tea-store.png)
+
+Make sure to then untick the box `Copy project into workspace` to prevent any naming errors. 
+
+![](docs-images/1.3-import-tea-store.png)
+
+![](docs-images/1.4-import-tea-supplier.png)
+
+![](docs-images/1.5-import-tea-supplier.png)
 
 ### 1.1 Running a test
 
+![](docs-images/1.6-run-tea-store-test.png)
+
+![](docs-images/1.7-tea-store-error.png)
+
+![](docs-images/1.8-tea-store-config.png)
+
+![](docs-images/1.9-tea-store-env.png)
+
+![](docs-images/1.10-tea-store-env.png)
+
+![](docs-images/1.11-tea-store-test-pass.png)
+
 ### 1.2 Running the provider verification
+
+![](docs-images/1.12-tea-supplier.png)
+
+![](docs-images/1.13-tea-sup-fail.png)
+
+![](docs-images/1.14-tea-sup-env.png)
+
+![](docs-images/1.15-tea-sup-run.png)
+
+![](docs-images/1.16-tea-sup-test-run.png)
 
 ## 2. Fixing the contract verification 
 
