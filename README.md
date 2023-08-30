@@ -287,6 +287,51 @@ Ok, so we have now removed the orginial errors. However, now because it is check
 
 Lets finish the consumer side error first. With the value `0.55GBP` that is returned, we can see that decimal numbers are allowed. Our regex for cost only allowed for 0-9 numbers. We need to update this with correct regex in `TeaBuilder.getTea()`. 
 
+The regex for cost will need to be updated with `.stringMatcher("cost", "\\d+\\.?\\d*GBP")`. 
+
+Follow the same steps as before:
+
+1. Save the changes
+1. Run the MUnit tests with right-click run `pact-munit-example/src/test/munit/get-tea-test-suite.xml`
+1. Run the tea-service with right-click run `tea-supplier/src/main/mule/tea-supplier.xml`
+1. In the wetty terminal run the command `mvn pact:verify`
+
+Now in the wetty terminal there should only be the provider error message returned. 
+
+`1.1) body: $.tea.1.supply Expected "100000000" (String) to be an integer`
+
+The provider error is easy to resolve as we are using mock data for our provider in place of a database connection. Go to the following file `tea-supplier/src/main/resources/getTea/all_tea_mock.dwl` and remove the quotes from the supply in order to make it a number. 
+
+It should look like this: 
+
+```JSON
+{
+	"tea": [
+		{
+			"name": "Mint",
+			"type": "decaffeinated",
+			"supply": 280000,
+			"cost": "2GBP"
+		},
+		{
+			"name": "English Breakfast",
+			"type": "caffeinated",
+			"supply": 100000000,
+			"cost": "0.55GBP"
+		}
+	]
+}
+```
+
+Follow the steps again to run:
+
+1. Save the changes
+1. Run the MUnit tests with right-click run `pact-munit-example/src/test/munit/get-tea-test-suite.xml`
+1. Run the tea-service with right-click run `tea-supplier/src/main/mule/tea-supplier.xml`
+1. In the wetty terminal run the command `mvn pact:verify`
+
+Now we should see Passed in the wetty terminal!
+
 
 
 ## 3. Writing more tests for each method
