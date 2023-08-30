@@ -2,7 +2,9 @@
 
 This repo is intended for the DevOps Playground Hands on with MUnit and Pact. During the DevOps Playground we provide a hosted infra that can be accessed by any web browser on your machine. You can find your instance on the day here: https://lab.devopsplayground.org/
 
-Follow along with the presenter on the day, if you get stuck or fall behind, there are detailed steps below of what we will be doing. You can rewind or awatch back on YouTube if using your own machine at anytime. [LINK TO COME]
+Follow along with the presenter on the day, if you get stuck or fall behind, there are detailed steps below of what we will be doing. You can rewind or awatch back on YouTube if using your own machine at anytime.
+
+- YouTube: https://www.youtube.com/live/l7-L0uO3Ur8?si=7-K6JvxV4b2w9_GC
 
 ## Prerequisites (Your own machine)
 This playground uses the following technology so you will need to make sure the following is setup on your machine:
@@ -11,7 +13,7 @@ This playground uses the following technology so you will need to make sure the 
 1. Get an AnyPoint Studio Trial or Licence: https://www.mulesoft.com/lp/dl/anypoint-mule-studio
 1. Install Java: https://www.java.com/download/
 1. Install Maven: https://maven.apache.org/install.html
-1. Download Pact Standalone JVM: 
+1. Download Pact Standalone JVM: [pact-jvm-server-4.1.42](https://repo1.maven.org/maven2/au/com/dius/pact/pact-jvm-server/4.1.42/#:~:text=06%3A53%20%20%20%20%20%20%20128-,pact%2Djvm%2Dserver%2D4.1.42.zip,-2023%2D07%2D28)
 1. Eclipse (maybe, sometimes get an error about needing Eclipse installed for Windows): https://eclipseide.org/
 
 ***Network***
@@ -107,23 +109,41 @@ Finally, `/tea/order` should take a request object with "name" and "amount". The
 
 Go to your VNC in the browser located at <YOUR-PANDA>.devopsplayground.org:6080/vnc.html
 
+When on the VNC, dismiss the popups and continue through the Linux setup. Then edit the scaling of the VNC to local.
+
+![](docs-images/0-set-scaling.png)
+
 In the repo there is already one test setup. Before we can run the test, we first need to setup the AnyPoint workspace and import the Mule projects. 
 
 To setup the workspace, we need to open anypoint studio located in `/Home/AnypointStudio`. Click on the `Anypoint Studio` application. This will open a window asking to set up your workspace. 
 
-> For the playground Anypoint Studio instance it **must** be set to the following directory: `/Home/workdir/Hands-on-with-MUnit-and-Pact`. Otherwise there will be an issue with the projects not displaying. 
+For the playground Anypoint Studio instance it **must** be set to the following directory: `/Home/workdir/Hands-on-with-MUnit-and-Pact`. Otherwise there will be an issue with the projects not displaying. 
 
-Set the workspace to the directory like the image below.
+Set the workspace to the directory like the image below making sure the work directory is set to `/Home/workdir/Hands-on-with-MUnit-and-Pact`.
 
 ![](docs-images/1.1-set-workspace.png)
 
-Now the workspace is set, all we need to do is start to import the two projects. Go to `File -> Import` or click the Import Project on the side. 
+Now the workspace is set, all we need to do is start to import the two projects. Go to `File -> Import`. 
 
 ![](docs-images/1.1.1-import.png)
 
 Then select `Anypoint Studio -> Anypoint Studio project from File System`.
 
 ![](docs-images/1.1.2-project-type.png)
+
+For first time setup you may encounter a blank screen instead of being given the contents of the directory.
+
+![](docs-images/1.1.3-blank-import-dir.png)
+
+To resolve this issue click "Cancel" and go to `File -> Switch Workspace -> Other`.
+
+![](docs-images/1.1.4-switch-workspace.png)
+
+Click on `Launch` on the popup after checking it is set to the correct workspace. This will relaunch Anypoint Studio.
+
+![](docs-images/1.1.5-launch-workspace.png)
+
+After this try to Import the project again through `File -> Import`. Then select `Anypoint Studio -> Anypoint Studio project from File System`.
 
 After clicking next, select the project `pact-munit-example` to have the screen below.
 
@@ -331,12 +351,6 @@ Follow the steps again to run:
 1. In the wetty terminal run the command `mvn pact:verify`
 
 Now we should see Passed in the wetty terminal!
-
-
-
-## 3. Writing more tests for each method
-
-
 
 ## [Bonus] Running with the Pact Broker
 To use the pact broker with this solution you will need to make a few small changes. 
